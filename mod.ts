@@ -138,10 +138,22 @@ const get_torrent_contents = async ( hash: string, indexes?: string | string[] )
   }
 }
 
+const get_build_info = async () => {
+  return await use_api('app/buildInfo');
+}
+
+const ping = async () => {
+  let before_exec = +new Date;
+  await get_build_info();
+  let after_exec = +new Date;
+  return {"pong": after_exec - before_exec}
+}
+
 export {
   login, logout,
   info_torrents,
   add_torrents,
+  get_build_info,
   pause_torrents,
   resume_torrents,
   remove_torrents,
@@ -149,5 +161,5 @@ export {
   recheck_torrents,
   reannounce_torrents,
   get_torrent_contents,
-  env
+  ping, env
 }
