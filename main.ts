@@ -1,5 +1,8 @@
-import { env, login, logout, info_torrents } from "https://deno.land/x/denqbclient/mod.ts";
+import {
+  login, remove_torrents,
+  logout, info_torrents, env
+} from "https://deno.land/x/denqbclient/mod.ts";
 
-console.log(await login(env['username'], env['password']));
+await login(env['username'], env['password']);
 console.log(await info_torrents());
 await logout()

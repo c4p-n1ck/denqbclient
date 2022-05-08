@@ -14,7 +14,7 @@ const post_data = ( d: any ) => {
   ).join('&');
 };
 const use_api = async (method: string,  input?: any, debug?: boolean): Promise<any> => {
-  var resdt = ""; var data = ""; var resp: any = null;
+  var resp_data = ""; var data = ""; var resp: any = null;
   let full_url = `${base_url}/${api_path}/${method}`;
   if ( typeof input !== "undefined" ) {
     if ( 'params' in input ) {
@@ -29,21 +29,26 @@ const use_api = async (method: string,  input?: any, debug?: boolean): Promise<a
       method: 'GET',
       headers: headers,
       credentials: 'include'
-    }); resdt = await resp.text();
+    });
   } else if ( 'data' in input ) {
     resp = await fetch(full_url, {
       method: 'POST',
       headers: headers,
       body: data,
       credentials: 'include'
-    }); resdt = await resp.text();
-  }; if ( resp.headers.get('Content-Type') === "application/json" ) { resdt = JSON.parse(resdt) }
+    });
+  }; try {
+    resp_data = await resp.text();
+  } catch ( err ) {
+    console.log(err);
+    resp_data = await resp.text();
+  }; if (resp.headers.get('Content-Type')==="application/json"){resp_data=JSON.parse(resp_data)}
   if ( typeof debug !== 'undefined' && debug ) {
         console.log(resp);
-        console.log(resdt);
+        console.log(resp_data);
   } else if ( method === "auth/login" ) {
     return resp.headers.get('set-cookie') || '';
-  }; return resdt
+  }; return resp_data
 }
 
 
