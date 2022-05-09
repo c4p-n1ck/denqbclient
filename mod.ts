@@ -114,10 +114,10 @@ const info_torrents = async ( hash?: string, options?: any ) => {
   }
 }
 
-const add_torrents = async (torrent_url: string | string[], torrent_filenames: string | string[]) => {
+const add_torrents = async (torrent_url: string | string[], torrent_filenames?: string | string[]) => {
   let resp: any = {}; let resps: any[] = []
   if ( typeof(torrent_url) === "object" ) { torrent_url = torrent_url.join("\n"); }
-  if (torrent_filenames) {
+  if (typeof torrent_filenames !== "undefined") {
     if ( typeof torrent_filenames !== "object" ) {
       torrent_filenames = [ torrent_filenames ];
     }; torrent_filenames.forEach( async ( torrent_filename: any ) => {
