@@ -4,7 +4,7 @@ import {
   get_build_info, env
 } from "./mod.ts";
 
-await login(env['username'], env['password']);
+console.log(await login(env['username'], env['password']));
 console.log(await info_torrents());
 console.log(await ping());
 await logout()
